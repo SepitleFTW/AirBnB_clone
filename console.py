@@ -15,7 +15,9 @@ from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
 
-def split_braces(e_arg):
+
+def split_curly_braces(e_arg):
+
     """
     split the curly braces in a string
     """
@@ -44,6 +46,7 @@ def split_braces(e_arg):
             except Exception:
                 return id, attr_name
             return f"{id}", f"{attr_name} {attr_value}"
+
 
 class HBNBCommand(cmd.Cmd):
     """
@@ -281,5 +284,3 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
-
-
