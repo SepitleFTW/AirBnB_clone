@@ -13,13 +13,23 @@ class BaseModel:
     BaseModel class defines common attributes and methods for other classes.
     """
 
-    def __init__(self):
+    def __init__(self, *noob, **noobs):
         """
         Initializes a new instance of the BaseModel class.
         """
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.utcnow()
-        self.updated_at = datetime.utcnow()
+        time_format = "%Year-%Month-%Day%Hour:%Minute:%Second:%f"
+        if noob:
+            for key , value in noob.items():
+                if key == "__class__":
+                    continue
+                elif key == "created_at" or key == "updated_at":
+                    setattr(self, key, datetime.strptime(value, time_format))
+                else:
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.utcnow()
+            self.updated_at = datetime.utcnow()
 
     def save(self):
         """
@@ -42,6 +52,39 @@ class BaseModel:
         Returns a string for the BaseModel instances
         """
         return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     my_model = BaseModel()
