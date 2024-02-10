@@ -7,18 +7,17 @@ import json
 import os
 from models.base_model import BaseModel
 from models.user import User
-from models.amenity import Amenity
-from models.place import Place
-from models.review import Review
 from models.state import State
 from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
     """
     a class wwhere files will be stored in JSON
     """
-    pass
 
     __file_path = "file.json"
 
@@ -60,7 +59,7 @@ class FileStorage:
         """
         convert JSON file to python object
         """
-        if os.path.isFile(FileStorage.__file_path):
+        if os.path.isfile(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
                 try:
                     obj_dict = json.load(file)
