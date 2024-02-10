@@ -4,6 +4,7 @@ this is the review class module
 """
 from models.base_model import BaseModel
 
+
 class Review(BaseModel):
     """
     review class for all the reviews

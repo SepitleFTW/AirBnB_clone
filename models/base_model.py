@@ -8,6 +8,7 @@ Some syntax errors were fixed by ChatGPT-3.5
 import uuid
 from datetime import datetime
 
+
 class BaseModel:
     """
     BaseModel class defines common attributes and methods for other classes.
@@ -19,7 +20,7 @@ class BaseModel:
         """
         time_format = "%Year-%Month-%Day%Hour:%Minute:%Second:%f"
         if noob:
-            for key , value in noob.items():
+            for key, value in noob.items():
                 if key == "__class__":
                     continue
                 elif key == "created_at" or key == "updated_at":
@@ -49,28 +50,28 @@ class BaseModel:
 
     def __str__(self):
         """
-        Returns a string for the BaseModel instances
+        Returns a string for
         """
-        return "[{}] ({}) {}".format(self.__class__.__name__, self.id, self.__dict__)
+        return "[{}] ({}) {}".format(class_name, self.idl, self.__dict__)
+    if __name__ == "__main__":
+        my_model = BaseModel()
+        my_model_name = "Initial Model"
+        my_model.my_number = 69
+        print(my_model)
+        my_model.save()
+        print(my_model)
+        my_model_json = my_model.to_dict()
+        print(my_model_json)
+        print("JSON of my_model:")
+        for key in my_model_json.keys():
+            print("\t{}: ({}) - {}".format(key, type(my_model_json[key]),
+                                           my_model_json[key]))
 
-if __name__ == "__main__":
-    my_model = BaseModel()
-    my_model_name = "Initial Model"
-    my_model.my_number = 69
-    print(my_model)
-    my_model.save()
-    print(my_model)
-    my_model_json = my_model.to_dict()
-    print(my_model_json)
-    print("JSON of my_model:")
-    for key in my_model_json.keys():
-        print("\t{}: ({}) - {}".format(key, type(my_model_json[key]), my_model_json[key]))
+        print("---")
+        my_new_model = BaseModel(**my_model_json)
+        print(my_new_model.id)
+        print(my_new_model)
+        print(type(my_new_model.created_at))
 
-    print("---")
-    my_new_model = BaseModel(**my_model_json)
-    print(my_new_model.id)
-    print(my_new_model)
-    print(type(my_new_model.created_at))
-
-    print("---")
-    print(my_model is my_new_model)
+        print("---")
+        print(my_model is my_new_model)
