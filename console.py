@@ -1,8 +1,7 @@
-#!/usr/bin/python3
+#!/usr/bin/python
 """
-this is the consoles module
+Module for console
 """
-
 import cmd
 import re
 import shlex
@@ -10,19 +9,18 @@ import ast
 from models import storage
 from models.base_model import BaseModel
 from models.user import User
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 from models.state import State
 from models.city import City
-from models.place import Place
-from models.amenity import Amenity
-from models.review import Review
 
 
 def split_curly_braces(e_arg):
-
     """
-    split the curly braces in a string
+    Splits the curly braces for the update method
     """
-    curly_braces = re.search(r"\{(.?*)\}", e_arg)
+    curly_braces = re.search(r"\{(.*?)\}", e_arg)
 
     if curly_braces:
         id_with_comma = shlex.split(e_arg[:curly_braces.span()[0]])
@@ -32,7 +30,7 @@ def split_curly_braces(e_arg):
         try:
             arg_dict = ast.literal_eval("{" + str_data + "}")
         except Exception:
-            print("** dictionary format invalid/wrong **")
+            print("**  invalid dictionary format **")
             return
         return id, arg_dict
     else:
@@ -42,6 +40,10 @@ def split_curly_braces(e_arg):
                 id = commands[0]
             except Exception:
                 return "", ""
+            try:
+                attr_name = commands[1]
+            except Exception:
+                return id, ""
             try:
                 attr_value = commands[2]
             except Exception:
@@ -137,7 +139,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """
-       print string representation
+        Print the string representation of all instances or a specific class.
+        Usage: <User>.all()
+                <User>.show()
         """
         objects = storage.all()
 
