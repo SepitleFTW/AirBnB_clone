@@ -11,33 +11,32 @@ from models.review import Review
 
 
 class FileStorage:
-    """Represent storage engine.
+    """Represeage engine.
 
     Attributes:
-        __file_path : name of  file to save to.
-        __objects : dictionary of instantiated objects.
+        __objects : tionay  objects.
     """
     __file_path = "file.json"
     __objects = {}
 
     def all(self):
-        """Return  dictionary __objects."""
+        """Retur_objects."""
         return FileStorage.__objects
 
     def new(self, obj):
-        """Sets upo in __objects obj with key <obj_class_name>.id"""
+        """Sets upo in __o <obj_class_name>.id"""
         ocname = obj.__class__.__name__
         FileStorage.__objects["{}.{}".format(ocname, obj.id)] = obj
 
     def save(self):
-        """Sets __objects to the JSON file __file_path."""
+        """Sets __objects  """
         odict = FileStorage.__objects
         objdict = {obj: odict[obj].to_dict() for obj in odict.keys()}
         with open(FileStorage.__file_path, "w") as f:
             json.dump(objdict, f)
 
     def reload(self):
-        """Unsets the JSON file __file_path to __objects, if it exists."""
+        """Unsets """
         try:
             with open(FileStorage.__file_path) as f:
                 objdict = json.load(f)
