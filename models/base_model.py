@@ -6,7 +6,7 @@ Some syntax errors were fixed by ChatGPT-3.5
 """
 
 import models
-import uuid
+from uuid import uuid4
 from datetime import datetime
 
 
