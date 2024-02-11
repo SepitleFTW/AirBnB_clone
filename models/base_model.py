@@ -7,6 +7,7 @@ Some syntax errors were fixed by ChatGPT-3.5
 
 import uuid
 from datetime import datetime
+import models
 
 
 class BaseModel:
@@ -19,8 +20,8 @@ class BaseModel:
         Initializes a new instance of the BaseModel class.
         """
         time_format = "%Year-%Month-%Day%Hour:%Minute:%Second:%f"
-        if noob:
-            for key, value in noob.items():
+        if noobs:
+            for key, value in noobs.items():
                 if key == "__class__":
                     continue
                 elif key == "created_at" or key == "updated_at":
