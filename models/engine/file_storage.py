@@ -1,10 +1,6 @@
 #!/usr/bin/python3
-"""
-module for reading data and 'unreading' it
-"""
-
+"""filestorage class."""
 import json
-import os
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -15,61 +11,39 @@ from models.review import Review
 
 
 class FileStorage:
-    """
-    a class wwhere files will be stored in JSON
-    """
+    """Represent storage engine.
 
+    Attributes:
+        __file_path : name of  file to save to.
+        __objects : dictionary of instantiated objects.
+    """
     __file_path = "file.json"
+    __objects = {}
 
-    __object = {}
+    def all(self):
+        """Return  dictionary __objects."""
+        return FileStorage.__objects
 
-    def initialize(self, obj):
-        """
-        this will be added to basemodel constructor
-        to be stored when called/passed
-
-        """
-        obj_cls_name = obj.__class__.__name__
-        key = "{}.{}".format(obj_cls_name, obj.id)
-
-        FileStorage.__object[key] = obj
-
-    def everything(self):
-        """
-        I got this code ffrom CHATGPT3.5 lmao
-        I was so confused
-        """
-        return FileStorage.__object
+    def new(self, obj):
+        """Sets upo in __objects obj with key <obj_class_name>.id"""
+        ocname = obj.__class__.__name__
+        FileStorage.__objects["{}.{}".format(ocname, obj.id)] = obj
 
     def save(self):
-        """
-        serialise obj dict into json format
-        basically to save into JSON
-        """
-        all_objs = FileStorage.__objects
-        obj_dict = {}
-
-        for obj in all_objs.keys():
-            obj_dict[obj] = all_objs[obj], to_dict()
-
-        with open(FileStorage.__file_path, "w", encoding="utf-8") as file:
-            json.dump(obj_dict, file)
+        """Sets __objects to the JSON file __file_path."""
+        odict = FileStorage.__objects
+        objdict = {obj: odict[obj].to_dict() for obj in odict.keys()}
+        with open(FileStorage.__file_path, "w") as f:
+            json.dump(objdict, f)
 
     def reload(self):
-        """
-        convert JSON file to python object
-        """
-        if os.path.isfile(FileStorage.__file_path):
-            with open(FileStorage.__file_path, "r", encoding="utf-8") as file:
-                try:
-                    obj_dict = json.load(file)
-
-                    for key, value in obj_dict.items():
-                        class_name, obj_id = key.split(".")
-
-                        cls = eval(class_name)
-                        instance = cls(**value)
-
-                        FileStorage.__objects[key] = instance
-                except Exception:
-                    pass
+        """unsets the JSON file __file_path to __objects, if it exists."""
+        try:
+            with open(FileStorage.__file_path) as f:
+                objdict = json.load(f)
+                for o in objdict.values():
+                    cls_name = o["__class__"]
+                    del o["__class__"]
+                    self.new(eval(cls_name)(**o))
+        except FileNotFoundError:
+            return
