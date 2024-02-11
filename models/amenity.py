@@ -1,12 +1,12 @@
 #!/usr/bin/python3
-"""
-This is the amenity classes module
-"""
-from models.base_model import BaseModel
+""" ameinty7 class"""
+from models.base_models import BaseModel
 
 
 class Amenity(BaseModel):
+    """above mentioned class
+    Attributes:
+    name : hahah ofcoursew its name
     """
-    amenity class
-    """
+
     name = ""

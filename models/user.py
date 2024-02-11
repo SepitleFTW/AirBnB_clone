@@ -1,16 +1,14 @@
 #!/usr/bin/python3
-"""
-user class' module
-"""
-from models.base_model import BaseModel
+"""a user class will be defined here"""
+from models.base.base_model import BaseModel
 
 
 class User(BaseModel):
     """
-    user class for all the users
-    and handles all their information
+    the above mentioned class
     """
+
     email = ""
     password = ""
-    first_name = ""
     last_name = ""
+    first_name = ""

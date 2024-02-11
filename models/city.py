@@ -1,17 +1,11 @@
 #!/usr/bin/python3
-"""
-this is ther city class Module
-"""
+"""class def for city"""
 from models.base_model import BaseModel
 
 
 class City(BaseModel):
-
     """
-    city class
-    state_id is the states id
-    name as a string is the name of the city
-    obviiii
+    as mentioned above lmao
     """
 
     state_id = ""
